@@ -1,24 +1,24 @@
 if __name__ == '__main__':
     def cafe():
         appitizers = {
-            'Wings': 0,
-            'Cookies': 0,
-            'Spring Rools': 0
+            'wings': 0,
+            'cookies': 0,
+            'spring rolls': 0
         }
         entrees = {
-            'Salmon': 0,
-            'Steak': 0,
-            'Meat tornado': 0,
+            'salmon': 0,
+            'steak': 0,
+            'meat tornado': 0,
         }
         desserts = {
-           'Ice Cream': 0,
-           'Cake': 0,
-           'Pie': 0
+           'ice cream': 0,
+           'cake': 0,
+           'pie': 0
         }
         drinks = {
-            'Coffee': 0,
-            'Tea': 0,
-            'Blood': 0
+            'coffee': 0,
+            'tea': 0,
+            'blood': 0
         }
         final_order = {}
 
@@ -43,17 +43,17 @@ if __name__ == '__main__':
         print('\n' + '*' * 35 + '\n' + '** What would you like to order?**\n' +
               '*' * 35)
         while True:
-            order = input('> ')
+            order = input('> ').lower()
             if (order in appitizers or order in entrees or order in desserts or
                     order in drinks):
                 final_order[order] = 1 + final_order.get(order, 0)
                 print('\n** ' + str(final_order[order]) + ' order(s) of ' +
                       str(order) + ' has been added to your meal **\n')
-            elif order == 'Order':
+            elif order.lower() == 'order':
                 print('\n** You have ordered **')
                 for key, val in final_order.items():
                     print('** {} order(s) {} **'.format(val, key))
-            elif order == 'quit':
+            elif order.lower() == 'quit':
                 break
             else:
                 print('\n** That item is not on the menu **\n')
