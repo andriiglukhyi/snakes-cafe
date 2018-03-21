@@ -48,6 +48,10 @@ order_number = str(uuid.uuid1())
 
 
 def menu():
+    """
+    Prints the menu by retrieving every key from every dictionary in the
+    menu_items dictionary
+    """
     print('''
 **************************************
 **    Welcome to the Snakes Cafe!   **
@@ -75,17 +79,27 @@ def menu():
 
 
 def search(key):
+    """
+    Searches the dictionary to print the set of keys from a specific meal
+    """
     for food in menu_items[key].keys():
         print(food)
 
 
 def add_to_order(food):
+    """
+    Adds the chosen food item to the running order and prints a response and 
+    current subtotal
+    """
     final_order[food] = 1 + final_order.get(food, 0)
     print('\n ** {} order(s) of {} has been added to your meal ** \n ** Your '
           'order cost is {:.2f} **\n'.format(final_order[food], food, bill()))
 
 
 def bill():
+    """
+    Sums a subtotal of selected menu items prices
+    """
     subtotal = 0
     for key, val in final_order.items():
         if key in menu_items['appitizers']:
@@ -102,6 +116,9 @@ def bill():
 
 
 def order_total():
+    """
+    Prints a reciept of each food items prices, a subtotal, tax, and final cost
+    """
     print('\n' + '*' * 61 + '\n' + 'The Snakes Cafe' + '\n' + 'Order ' +
           order_number + '\n' + '=' * 61)
     subtotal = bill()
@@ -125,6 +142,10 @@ def order_total():
 
 
 def remove(key):
+    """
+    Removes one instance of a food item from the order, deletes it if it no
+    longer exists
+    """
     if key in final_order:
         final_order[key] -= 1
         if final_order[key] == 0:
@@ -133,6 +154,9 @@ def remove(key):
 
 
 def cafe():
+    """
+    Handles user input to call correct functions
+    """
     menu()
     while True:
         order = input('> ').lower()
