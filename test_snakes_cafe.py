@@ -2,10 +2,6 @@ import snakes_cafe
 
 def test_remove ():
 
-    # ***
-    # test should lover current value by 1 ppont
-    # ***
-
     snakes_cafe.final_order['tea'] = 5
     snakes_cafe.remove('tea')
     assert snakes_cafe.final_order['tea'] == 4
@@ -19,6 +15,7 @@ def test_bill():
     snakes_cafe.final_order['wings'] = 20
     snakes_cafe.final_order['tea'] = 20
     assert snakes_cafe.bill() == 289
+
 
 def test_search():
     key = 'entrees'
