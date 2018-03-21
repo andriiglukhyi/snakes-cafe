@@ -1,7 +1,7 @@
 # Snakes Cafe
 
 **Author**: Andrii Glukhyi & Austin Matteson
-**Version**: 1.0.0 
+**Version**: 2.0.0 
 
 ## Overview
 <!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for a Code Fellows 401 class. (i.e. What's your problem domain?) -->
@@ -24,8 +24,7 @@ None.
 
 01-01-2001 4:59pm - Added functionality to add and delete some things.
 -->
-03-19-2018 4:30pm - Created Repo
-03-19-2018 5:00pm - Printed Menu
-03-19-2018 5:30pm - User Input
-03-19-2018 6:00pm - Cleaned Functionality
-03-19-2018 6:30pm - Keyboard interrupt cleanly
+03-19-2018 8:00pm - finalazing our work 
+03-19-2018 5:30pm - We done with writing the test and start writh the program 
+03-19-2018 3:45pm - We have 3 tests
+03-19-2018 2:00pm - Creat list of test what we want to impliment
