@@ -81,30 +81,41 @@ def search(key):
 
 def add_to_order(food):
     final_order[food] = 1 + final_order.get(food, 0)
-    print('\n** ' + str(final_order[food]) + ' order(s) of ' +
-          str(food) + ' has been added to your meal **\n')
+    print('\n ** {} order(s) of {} has been added to your meal ** \n ** Your '
+          'order cost is {:.2f} **\n'.format(final_order[food], food, bill()))
+
+
+def bill():
+    subtotal = 0
+    for key, val in final_order.items():
+        if key in menu_items['appitizers']:
+            subtotal += menu_items['appitizers'].get(key)*val
+        elif key in menu_items['entrees']:
+            subtotal += menu_items['entrees'].get(key)*val
+        elif key in menu_items['desserts']:
+            subtotal += menu_items['desserts'].get(key)*val
+        elif key in menu_items['drinks']:
+            subtotal += menu_items['drinks'].get(key)*val
+        elif key in menu_items['sides']:
+            subtotal += menu_items['sides'].get(key) * val
+    return subtotal
 
 
 def order_total():
-    subtotal = 0
     print('\n' + '*' * 61 + '\n' + 'The Snakes Cafe' + '\n' + 'Order ' +
           order_number + '\n' + '=' * 61)
+    subtotal = bill()
     for key, val in final_order.items():
         if key in menu_items['appitizers']:
             price = menu_items['appitizers'].get(key)*val
-            subtotal += price
         elif key in menu_items['entrees']:
             price = menu_items['entrees'].get(key)*val
-            subtotal += price
         elif key in menu_items['desserts']:
             price = menu_items['desserts'].get(key)*val
-            subtotal += price
         elif key in menu_items['drinks']:
             price = menu_items['drinks'].get(key)*val
-            subtotal += price
         elif key in menu_items['sides']:
             price = menu_items['sides'].get(key) * val
-            subtotal += price
         to_output = ('{} x {}'.format(key, val))
         print('{:<30} {:>30.2f}'.format(to_output, price))
     tax = subtotal * 0.096
