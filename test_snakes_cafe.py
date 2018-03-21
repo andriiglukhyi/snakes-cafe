@@ -39,8 +39,8 @@ def test_search():
 
 
 def test_remove_0():
-     """
-    Test will if function will remove one item from current backet')
+    """
+    Test will if function will remove one item from current order
     """
     snakes_cafe.final_order['tea'] = 1
     snakes_cafe.remove('tea')
