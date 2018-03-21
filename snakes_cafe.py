@@ -161,7 +161,7 @@ def cafe():
     """
     Handles user input to call correct functions
     """
-    menu()
+    
     while True:
         order = input('> ').lower()
         if (order in menu_items['appitizers'] or order in
@@ -184,6 +184,9 @@ def cafe():
 
 if __name__ == '__main__':
     try:
+        menu()
         cafe()
+        
+        
     except KeyboardInterrupt:
         sys.exit(0)
