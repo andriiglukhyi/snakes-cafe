@@ -1,4 +1,4 @@
-# import sys
+import sys
 import uuid
 
 menu_items = {
@@ -48,10 +48,13 @@ order_number = str(uuid.uuid1())
 
 
 def menu():
-    print('*' * 38 + '\n' + '**    Welcome to the Snakes Cafe!   **' + '\n' +
-          '**    Please see our menu below.    **' + '\n' + '\n' +
-          '**    Type Order to see your current order.    **' + '\n' +
-          '** To quit at any time, type "quit" **' + '\n' + '*' * 38)
+    print('''
+**************************************
+**    Welcome to the Snakes Cafe!   **
+**    Please see our menu below.    **
+**
+** To quit at any time, type "quit" **
+**************************************''')
     print('\nAppitizers' + '\n' + '-------------')
     for key in menu_items['appitizers'].keys():
         print(key)
@@ -141,4 +144,7 @@ def cafe():
 
 
 if __name__ == '__main__':
-    cafe()
+    try:
+        cafe()
+    except KeyboardInterrupt:
+        sys.exit(0)
