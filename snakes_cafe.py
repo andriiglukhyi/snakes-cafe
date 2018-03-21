@@ -59,20 +59,20 @@ def menu():
 ** To quit at any time, type "quit" **
 **************************************''')
     print('\nAppitizers' + '\n' + '-------------')
-    for key in menu_items['appitizers'].keys():
-        print(key)
+    for key, value in menu_items['appitizers'].items():
+        print('{} - ${:.2f}'.format(key, value))
     print('\nEntrees' + '\n' + '-------------')
-    for key in menu_items['entrees'].keys():
-        print(key)
+    for key, value in menu_items['entrees'].items():
+        print('{} - ${:.2f}'.format(key, value))
     print('\nDesserts' + '\n' + '-------------')
-    for key in menu_items['desserts'].keys():
-        print(key)
+    for key, value in menu_items['desserts'].items():
+        print('{} - ${:.2f}'.format(key, value))
     print('\nDrinks' + '\n' + '-------------')
-    for key in menu_items['drinks'].keys():
-        print(key)
+    for key, value in menu_items['drinks'].items():
+        print('{} - ${:.2f}'.format(key, value))
     print('\nSides' + '\n' + '-------------')
-    for key in menu_items['sides'].keys():
-        print(key)
+    for key, value in menu_items['sides'].items():
+        print('{} - ${:.2f}'.format(key, value))
     print('\n' + '*' * 35 + '\n' + '** What would you like to order?**\n' +
           '*' * 35)
 
@@ -153,7 +153,7 @@ def remove(key):
         final_order[key] -= 1
         if final_order[key] == 0:
             del final_order[key]
-    order_total()
+    print('Your current total is ${:.2f}\n'.format(bill()))
 
 
 def cafe():
