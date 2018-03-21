@@ -82,8 +82,11 @@ def search(key):
     """
     Searches the dictionary to print the set of keys from a specific meal
     """
+    a = []
     for food in menu_items[key].keys():
+        a.append(food)
         print(food)
+    return a.sort()
 
 
 def add_to_order(food):
@@ -139,6 +142,7 @@ def order_total():
     print('-' * 61 + '\nSubtotal {:>52.2f}'.format(subtotal))
     print('Sales Tax {:>51.2f}'.format(tax))
     print('-' * 10 + '\nTotal Due {:>51.2f}\n'.format(subtotal + tax))
+    return round(subtotal+tax, 2)
 
 
 def remove(key):
