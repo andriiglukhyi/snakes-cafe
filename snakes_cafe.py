@@ -2,44 +2,44 @@ import uuid
 
 menu_items = {
     'appitizers': {
-        'wings': 13.00,
-        'cookies': 17.22,
-        'spring rolls': 13.56,
-        'pasta chips': 2.56,
-        'lasagna': 24.14,
-        'mozzarella': 12.45
+        'wings': [13.00,10],
+        'cookies': [17.22, 14],
+        'spring rolls': [13.56, 24],
+        'pasta chips': [2.56, 22],
+        'lasagna': [24.14, 10],
+        'mozzarella': [12.45, 11]
     },
     'entrees': {
-        'salmon': 23.55,
-        'steak': 11.56,
-        'country fried chicken': 24.05,
-        'chopped grilled angus': 16.94,
-        'crispy fish tacos': 23.67,
-        'meat tornado': 11.45
+        'salmon': [23.55, 20],
+        'steak': [11.56,12],
+        'country fried chicken': [24.05, 11],
+        'chopped grilled angus': [16.94, 12],
+        'crispy fish tacos': [23.67, 10],
+        'meat tornado': [11.45, 13]
     },
     'desserts': {
-        'ice cream': 2.17,
-        'cake': 3.67,
-        'molten chocolate cake': 12.45,
-        'cheesecake': 24.37,
-        'chip cookie': 10.46,
-        'pie': 23.45
+        'ice cream': [2.17, 12],
+        'cake': [3.67, 23],
+        'molten chocolate cake': [12.45,12],
+        'cheesecake': [24.37, 45],
+        'chip cookie': [10.46, 23],
+        'pie': [23.45, 34]
     },
     'drinks': {
-        'coffee': 2.24,
-        'tea': 1.45,
-        'milk': 2.00,
-        'vodka': 4.45,
-        'water': 2.35,
-        'blood': 10.00
+        'coffee': [2.24, 34],
+        'tea': [1.45, 12],
+        'milk': [2.00, 11],
+        'vodka': [4.45, 34],
+        'water': [2.35, 10],
+        'blood': [10.00, 23]
     },
     'sides': {
-        'onion rings': 10.45,
-        'gristmill fries': 11.00,
-        'gruene beans': 30.45,
-        'yellow & green squash': 30.00,
-        'homemade mashed potatoes': 25.00,
-        'steamed fresh veggies': 40.00
+        'onion rings': [10.45, 12],
+        'gristmill fries': [11.00, 23],
+        'gruene beans': [30.45, 23],
+        'yellow & green squash': [30.00, 23],
+        'homemade mashed potatoes': [25.00, 23],
+        'steamed fresh veggies': [40.00, 40]
     }
 }
 final_order = {}
@@ -60,19 +60,19 @@ def menu():
 **************************************''')
     print('\nAppitizers' + '\n' + '-------------')
     for key, value in menu_items['appitizers'].items():
-        print('{} - ${:.2f}'.format(key, value))
+        print('{} - ${:.2f}'.format(key, value[0]))
     print('\nEntrees' + '\n' + '-------------')
     for key, value in menu_items['entrees'].items():
-        print('{} - ${:.2f}'.format(key, value))
+        print('{} - ${:.2f}'.format(key, value[0]))
     print('\nDesserts' + '\n' + '-------------')
     for key, value in menu_items['desserts'].items():
-        print('{} - ${:.2f}'.format(key, value))
+        print('{} - ${:.2f}'.format(key, value[0]))
     print('\nDrinks' + '\n' + '-------------')
     for key, value in menu_items['drinks'].items():
-        print('{} - ${:.2f}'.format(key, value))
+        print('{} - ${:.2f}'.format(key, value[0]))
     print('\nSides' + '\n' + '-------------')
     for key, value in menu_items['sides'].items():
-        print('{} - ${:.2f}'.format(key, value))
+        print('{} - ${:.2f}'.format(key, value[0]))
     print('\n' + '*' * 35 + '\n' + '** What would you like to order?**\n' +
           '*' * 35)
 
@@ -94,8 +94,26 @@ def add_to_order(food):
     current subtotal
     """
     final_order[food] = 1 + final_order.get(food, 0)
-    print('\n ** {} order(s) of {} has been added to your meal ** \n ** Your '
+    print('\n ** {} total order(s) of {} has been added to your meal ** \n ** Your '
           'order cost is {:.2f} **\n'.format(final_order[food], food, bill()))
+
+
+def multi_order(name, item):
+    """
+    add a couple item to the order 
+    """
+    quant = 0
+    try:
+        quant = int(item.split(' ')[1])
+    except ValueError:
+        # print('Sorry it\'s not a value')
+        pass
+    if quant <= 0:
+        print('Sorry it\'s not a value')
+    else:
+        final_order[name] = quant + final_order.get(name, 0)
+        print('\n ** {} total order(s) of {} has been added to your meal ** \n ** Your '
+          'order cost is {:.2f} **\n'.format(final_order[name], name, bill()))
 
 
 def bill():
@@ -105,15 +123,15 @@ def bill():
     subtotal = 0
     for key, val in final_order.items():
         if key in menu_items['appitizers']:
-            subtotal += menu_items['appitizers'].get(key)*val
+            subtotal += menu_items['appitizers'].get(key)[0] * val
         elif key in menu_items['entrees']:
-            subtotal += menu_items['entrees'].get(key)*val
+            subtotal += menu_items['entrees'].get(key)[0]*val
         elif key in menu_items['desserts']:
-            subtotal += menu_items['desserts'].get(key)*val
+            subtotal += menu_items['desserts'].get(key)[0]*val
         elif key in menu_items['drinks']:
-            subtotal += menu_items['drinks'].get(key)*val
+            subtotal += menu_items['drinks'].get(key)[0]*val
         elif key in menu_items['sides']:
-            subtotal += menu_items['sides'].get(key) * val
+            subtotal += menu_items['sides'].get(key)[0] * val
     return subtotal
 
 
@@ -126,15 +144,15 @@ def order_total():
     subtotal = bill()
     for key, val in final_order.items():
         if key in menu_items['appitizers']:
-            price = menu_items['appitizers'].get(key)*val
+            price = menu_items['appitizers'].get(key)[0]*val
         elif key in menu_items['entrees']:
-            price = menu_items['entrees'].get(key)*val
+            price = menu_items['entrees'].get(key)[0]*val
         elif key in menu_items['desserts']:
-            price = menu_items['desserts'].get(key)*val
+            price = menu_items['desserts'].get(key)[0]*val
         elif key in menu_items['drinks']:
-            price = menu_items['drinks'].get(key)*val
+            price = menu_items['drinks'].get(key)[0]*val
         elif key in menu_items['sides']:
-            price = menu_items['sides'].get(key) * val
+            price = menu_items['sides'].get(key)[0] * val
         to_output = ('{} x {}'.format(key, val))
         print('{:<30} {:>30.2f}'.format(to_output, price))
     tax = subtotal * 0.096
@@ -156,26 +174,53 @@ def remove(key):
     print('Your current total is ${:.2f}\n'.format(bill()))
 
 
+def find(inner_key):
+    for key in menu_items.keys():
+        if inner_key in menu_items[key]:
+            return key
+
+
+def stock(name, number):    
+    category = find(name)
+    num = 1
+    if name != number:
+        try:
+            num = int(number.split(' ')[1])
+        except ValueError:
+            pass
+    print(num)
+    if num <= menu_items[category][name][1]:
+        menu_items[category][name][1] -= num
+        return True
+    else:
+        print('Not enough stock')
+        return False
+
+
 def cafe():
     """
     Handles user input to call correct functions
     """
 
     while True:
-        order = input('> ').lower()
+        user_order = input('> ').lower()
+        order = user_order.split(' ')[0]
         if (order in menu_items['appitizers'] or order in
             menu_items['entrees'] or order in menu_items['desserts'] or
            order in menu_items['drinks'] or order in menu_items['sides']):
-            add_to_order(order)
-        elif order.lower() in menu_items.keys():
-            search(order.lower())
-        elif order.lower() == 'order':
+            if order == user_order and stock(order, user_order) == True:
+                add_to_order(order)
+            elif stock(order, user_order) == True:
+                multi_order(order, user_order)
+        elif user_order in menu_items.keys():
+            search(order)
+        elif user_order == 'order':
             order_total()
-        elif order.lower().split(' ')[0] == 'remove':
-            remove(order.lower().split(' ', 1)[1])
-        elif order.lower() == 'menu':
+        elif user_order.split(' ')[0] == 'remove':
+            remove(user_order.split(' ', 1)[1])
+        elif user_order == 'menu':
             menu()
-        elif order.lower() == 'quit':
+        elif user_order == 'quit':
             break
         else:
             print('\n** That item is not on the menu **\n')
