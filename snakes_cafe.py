@@ -1,4 +1,3 @@
-import sys
 import uuid
 
 menu_items = {
@@ -161,7 +160,7 @@ def cafe():
     """
     Handles user input to call correct functions
     """
-    
+
     while True:
         order = input('> ').lower()
         if (order in menu_items['appitizers'] or order in
@@ -186,7 +185,6 @@ if __name__ == '__main__':
     try:
         menu()
         cafe()
-        
-        
+
     except KeyboardInterrupt:
-        sys.exit(0)
+        print('Have a nice day!')
