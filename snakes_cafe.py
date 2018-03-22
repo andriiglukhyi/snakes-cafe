@@ -2,7 +2,7 @@ import uuid
 
 default_items = {
     'appitizers': {
-        'wings': [13.00,10],
+        'wings': [13.00, 10],
         'cookies': [17.22, 14],
         'spring rolls': [13.56, 24],
         'pasta chips': [2.56, 22],
@@ -11,7 +11,7 @@ default_items = {
     },
     'entrees': {
         'salmon': [23.55, 20],
-        'steak': [11.56,12],
+        'steak': [11.56, 12],
         'country fried chicken': [24.05, 11],
         'chopped grilled angus': [16.94, 12],
         'crispy fish tacos': [23.67, 10],
@@ -20,7 +20,7 @@ default_items = {
     'desserts': {
         'ice cream': [2.17, 12],
         'cake': [3.67, 23],
-        'molten chocolate cake': [12.45,12],
+        'molten chocolate cake': [12.45, 12],
         'cheesecake': [24.37, 45],
         'chip cookie': [10.46, 23],
         'pie': [23.45, 34]
@@ -90,30 +90,31 @@ def search(key):
 
 def add_to_order(food):
     """
-    Adds the chosen food item to the running order and prints a response and 
+    Adds the chosen food item to the running order and prints a response and
     current subtotal
     """
     final_order[food] = 1 + final_order.get(food, 0)
-    print('\n ** {} total order(s) of {} has been added to your meal ** \n ** Your '
-          'order cost is {:.2f} **\n'.format(final_order[food], food, bill()))
+    print('\n ** {} total order(s) of {} has been added to your meal ** \n **'
+          'Your order cost is {:.2f} **\n'.format(final_order[food], food,
+                                                  bill()))
 
 
 def multi_order(name, item):
     """
-    add a couple item to the order 
+    add a couple item to the order
     """
     quant = 0
     try:
         quant = int(item.split(' ')[1])
     except ValueError:
-        # print('Sorry it\'s not a value')
         pass
     if quant <= 0:
         print('Sorry it\'s not a value')
     else:
         final_order[name] = quant + final_order.get(name, 0)
-        print('\n ** {} total order(s) of {} has been added to your meal ** \n ** Your '
-          'order cost is {:.2f} **\n'.format(final_order[name], name, bill()))
+        print('\n ** {} total order(s) of {} has been added to your meal ** \n'
+              '** Your order cost is {:.2f} **\n'.format(final_order[name],
+                                                         name, bill()))
 
 
 def bill():
@@ -180,7 +181,7 @@ def find(inner_key):
             return key
 
 
-def stock(name, number):    
+def stock(name, number):
     category = find(name)
     num = 1
     if name != number:
@@ -199,16 +200,17 @@ def stock(name, number):
 
 def open_and_read(path):
     menu_csv = {}
-    with open(path,'r') as f:
-        test = f.read().split('\n')       
+    with open(path, 'r') as f:
+        test = f.read().split('\n')
         for item in test:
             item = item.split(',')
             if item[0] not in menu_csv:
                 print(item)
                 menu_csv[item[0]] = {}
-                menu_csv[item[0]][item[1]] = [float(item[2]),int(item[3])]
+                menu_csv[item[0]][item[1]] = [float(item[2]), int(item[3])]
             else:
-                menu_csv[item[0]].update({item[1]: [float(item[2]),int(item[3])]})
+                menu_csv[item[0]].update({item[1]: [float(item[2]),
+                                         int(item[3])]})
     return menu_csv
 
 
@@ -229,9 +231,9 @@ def cafe():
         if (order in menu_items['appitizers'] or order in
             menu_items['entrees'] or order in menu_items['desserts'] or
            order in menu_items['drinks'] or order in menu_items['sides']):
-            if order == user_order and stock(order, user_order) == True:
+            if order == user_order and stock(order, user_order) is True:
                 add_to_order(order)
-            elif stock(order, user_order) == True:
+            elif stock(order, user_order) is True:
                 multi_order(order, user_order)
         elif user_order in menu_items.keys():
             search(order)
@@ -248,7 +250,6 @@ def cafe():
             break
         else:
             print('\n** That item is not on the menu **\n')
-
 
 
 if __name__ == '__main__':
