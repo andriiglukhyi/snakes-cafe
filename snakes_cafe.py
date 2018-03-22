@@ -1,7 +1,5 @@
 import uuid
 
-# menu_items = {}
-
 default_items = {
     'appitizers': {
         'wings': [13.00,10],
@@ -223,9 +221,7 @@ def create(filepath):
 
 
 def cafe():
-    """
-    Handles user input to call correct functions
-    """
+    """Handles user input to call correct functions."""
 
     while True:
         user_order = input('> ').lower()
