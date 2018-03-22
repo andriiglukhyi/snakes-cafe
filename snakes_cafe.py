@@ -125,6 +125,7 @@ def multi_order(name, item):
         pass
     if quant <= 0:
         print('Sorry it\'s not a value')
+        return 1
     else:
         final_order[name] = quant + final_order.get(name, 0)
         print('\n ** {} total order(s) of {} has been added to your meal ** \n'
@@ -194,6 +195,7 @@ def find(inner_key):
     for key in menu_items.keys():
         if inner_key in menu_items[key]:
             return key
+    return 0
 
 
 def stock(name, number):
@@ -220,7 +222,6 @@ def open_and_read(path):
         for item in test:
             item = item.split(',')
             if item[0] not in menu_csv:
-                print(item)
                 menu_csv[item[0]] = {}
                 menu_csv[item[0]][item[1]] = [float(item[2]), int(item[3])]
             else:
