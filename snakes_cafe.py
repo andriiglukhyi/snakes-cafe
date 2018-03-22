@@ -7,7 +7,10 @@ default_items = {
         'spring rolls': [13.56, 24],
         'pasta chips': [2.56, 22],
         'lasagna': [24.14, 10],
-        'mozzarella': [12.45, 11]
+        'mozzarella': [12.45, 11],
+        'small salad': [6.00, 40],
+        'bread': [5.50, 100],
+        'baby legs': [0.99, 2]
     },
     'entrees': {
         'salmon': [23.55, 20],
@@ -15,7 +18,10 @@ default_items = {
         'country fried chicken': [24.05, 11],
         'chopped grilled angus': [16.94, 12],
         'crispy fish tacos': [23.67, 10],
-        'meat tornado': [11.45, 13]
+        'meat tornado': [11.45, 13],
+        'fish sticks': [12.32, 10],
+        'taylor swift': [89.21, 1],
+        'nomnomnom': [1.00, 50]
     },
     'desserts': {
         'ice cream': [2.17, 12],
@@ -23,7 +29,10 @@ default_items = {
         'molten chocolate cake': [12.45, 12],
         'cheesecake': [24.37, 45],
         'chip cookie': [10.46, 23],
-        'pie': [23.45, 34]
+        'pie': [23.45, 34],
+        'more pie': [23.46, 35],
+        'burger shake': [16.20, 20],
+        'snack': [3.50, 350]
     },
     'drinks': {
         'coffee': [2.24, 34],
@@ -31,7 +40,10 @@ default_items = {
         'milk': [2.00, 11],
         'vodka': [4.45, 34],
         'water': [2.35, 10],
-        'blood': [10.00, 23]
+        'blood': [10.00, 23],
+        'tequila': [20.00, 20],
+        'tears': [100.99, 1000],
+        'swamp juice': [0.23, 23]
     },
     'sides': {
         'onion rings': [10.45, 12],
@@ -39,7 +51,10 @@ default_items = {
         'gruene beans': [30.45, 23],
         'yellow & green squash': [30.00, 23],
         'homemade mashed potatoes': [25.00, 23],
-        'steamed fresh veggies': [40.00, 40]
+        'steamed fresh veggies': [40.00, 40],
+        'rice': [1.20, 120],
+        'cheese': [17.38, 30],
+        'an on fire garbage can': [0.01, 9001]
     }
 }
 final_order = {}
@@ -105,7 +120,7 @@ def multi_order(name, item):
     """
     quant = 0
     try:
-        quant = int(item.split(' ')[1])
+        quant = int(item.rsplit(' ', 1)[1])
     except ValueError:
         pass
     if quant <= 0:
@@ -227,7 +242,12 @@ def cafe():
 
     while True:
         user_order = input('> ').lower()
-        order = user_order.split(' ')[0]
+        try:
+            int(user_order[-1:])
+            order = user_order.rsplit(' ', 1)[0]
+            print(order)
+        except ValueError:
+            order = user_order
         if (order in menu_items['appitizers'] or order in
             menu_items['entrees'] or order in menu_items['desserts'] or
            order in menu_items['drinks'] or order in menu_items['sides']):
@@ -244,6 +264,7 @@ def cafe():
         elif user_order[-4:] == '.csv':
             create(user_order)
             menu()
+            final_order.clear()
         elif user_order == 'menu':
             menu()
         elif user_order == 'quit':
