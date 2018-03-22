@@ -69,3 +69,11 @@ def test_add_to_order():
     snakes_cafe.final_order['wings'] = 10
     snakes_cafe.add_to_order('wings')
     assert snakes_cafe.final_order['wings'] == 11
+
+def test_howmany_items_in_menu():
+    """
+    makes sure menu hase 9 items
+    """
+    pass
+
+def test_

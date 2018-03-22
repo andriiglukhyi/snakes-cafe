@@ -1,6 +1,8 @@
 import uuid
 
-menu_items = {
+# menu_items = {}
+
+default_items = {
     'appitizers': {
         'wings': [13.00,10],
         'cookies': [17.22, 14],
@@ -197,6 +199,29 @@ def stock(name, number):
         return False
 
 
+def open_and_read(path):
+    menu_csv = {}
+    with open(path,'r') as f:
+        test = f.read().split('\n')       
+        for item in test:
+            item = item.split(',')
+            if item[0] not in menu_csv:
+                print(item)
+                menu_csv[item[0]] = {}
+                menu_csv[item[0]][item[1]] = [float(item[2]),int(item[3])]
+            else:
+                menu_csv[item[0]].update({item[1]: [float(item[2]),int(item[3])]})
+    return menu_csv
+
+
+def create(filepath):
+    try:
+        global menu_items
+        menu_items = open_and_read(filepath)
+    except (FileNotFoundError, TypeError):
+        return default_items
+
+
 def cafe():
     """
     Handles user input to call correct functions
@@ -218,6 +243,9 @@ def cafe():
             order_total()
         elif user_order.split(' ')[0] == 'remove':
             remove(user_order.split(' ', 1)[1])
+        elif user_order[-4:] == '.csv':
+            create(user_order)
+            menu()
         elif user_order == 'menu':
             menu()
         elif user_order == 'quit':
@@ -226,8 +254,10 @@ def cafe():
             print('\n** That item is not on the menu **\n')
 
 
+
 if __name__ == '__main__':
     try:
+        menu_items = create(None)
         menu()
         cafe()
 
