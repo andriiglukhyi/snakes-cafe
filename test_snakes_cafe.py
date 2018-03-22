@@ -1,60 +1,47 @@
 import snakes_cafe
 
+snakes_cafe.menu_items = snakes_cafe.default_items
+
 
 def test_remove():
-    """
-    Test will test remove function. It the add 1 to the current value
-    """
+    """add 1 to the current value"""
     snakes_cafe.final_order['tea'] = 5
     snakes_cafe.remove('tea')
     assert snakes_cafe.final_order['tea'] == 4
 
 
 def test_order_total():
-    """
-    Test will count the total dependence on the current order backet('final
-    order')
-    """
+    """count the total"""
     snakes_cafe.final_order['wings'] = 1
     snakes_cafe.final_order['tea'] = 3
     assert snakes_cafe.order_total() == 19.02
 
 
 def test_bill():
-    """
-    Test will count the bill dependence on the current order backet('final
-    order')
-    """
+    """count the bill for"""
     snakes_cafe.final_order['wings'] = 20
     snakes_cafe.final_order['tea'] = 20
     assert snakes_cafe.bill() == 289
 
 
 def test_search():
-    """
-    Test will search for spesick menu item and will print all item inside that
-    menu item
-    """
+    """search for spesick menu item and will print all item inside that
+    menu item"""
     key = 'entrees'
     assert snakes_cafe.search(key) == ['salmon', 'steak', 'country fried '
                                        'chicken', 'chopped grilled angus',
-                                       'crispy fish tacos', 'meat'
-                                       'tornado'].sort()
+                                       'crispy fish tacos', 'meat'                                        'tornado'].sort()
 
 
 def test_remove_0():
-    """
-    Test will check if function will remove one item from current order
-    """
+    """check if function will remove one item from order."""
     snakes_cafe.final_order['tea'] = 1
     snakes_cafe.remove('tea')
-    assert ['tea'] not in snakes_cafe.final_order.keys()
+    assert 'tea' not in snakes_cafe.final_order.keys()
 
 
 def test_add_to_order_one_elemant():
-    """
-    Test will check current order if we add one element two identical items
-    """
+    """Test will check current order if we add one element two identical items."""
     snakes_cafe.final_order = {}
     snakes_cafe.add_to_order('cake')
     snakes_cafe.add_to_order('cake')
@@ -62,18 +49,22 @@ def test_add_to_order_one_elemant():
 
 
 def test_add_to_order():
-    """
-    Test will check if the current backet will change if we add one item to our
-    order
-    """
+    """check if the current backet will change if we add one item."""
     snakes_cafe.final_order['wings'] = 10
     snakes_cafe.add_to_order('wings')
     assert snakes_cafe.final_order['wings'] == 11
 
-def test_howmany_items_in_menu():
-    """
-    makes sure menu hase 9 items
-    """
-    pass
 
-def test_
+def test_search_type_output():
+    """check if output is list"""
+    item = 'entrees'
+    assert type(snakes_cafe.search(item)) == list
+
+# def test_search_not_in_menu():
+#     """check if item not in menu"""
+#     item = 'something'
+#     assert snakes_cafe.search(item) == []
+
+# def test_multi_order():
+#     """add o item to oted"""
+#     snakes_cafe.add_to_order(num)
