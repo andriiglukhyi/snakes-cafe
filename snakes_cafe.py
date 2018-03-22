@@ -100,7 +100,7 @@ def search(key):
     for food in menu_items[key].keys():
         a.append(food)
         print(food)
-    return a.sort()
+    return sorted(a)
 
 
 def add_to_order(food):

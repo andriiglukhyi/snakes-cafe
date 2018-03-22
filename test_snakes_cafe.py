@@ -28,9 +28,11 @@ def test_search():
     """search for spesick menu item and will print all item inside that
     menu item"""
     key = 'entrees'
-    assert snakes_cafe.search(key) == sorted(['salmon', 'steak', 'country fried '
-                                       'chicken', 'chopped grilled angus',
-                                       'crispy fish tacos', 'meat'                                        'tornado'])
+    assert snakes_cafe.search(key) == sorted(['salmon', 'steak', 'country '
+                                              'fried chicken', 'chopped '
+                                              'grilled angus', 'crispy fish '
+                                              'tacos', 'meat tornado', 'fish '
+                                              'sticks', 'taylor swift'])
 
 
 def test_remove_0():
@@ -41,7 +43,7 @@ def test_remove_0():
 
 
 def test_add_to_order_one_elemant():
-    """Test will check current order if we add one element two identical items."""
+    """Check current order if we add one element two identical items."""
     snakes_cafe.final_order = {}
     snakes_cafe.add_to_order('cake')
     snakes_cafe.add_to_order('cake')
