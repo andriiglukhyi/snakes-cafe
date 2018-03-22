@@ -244,6 +244,7 @@ def cafe():
         elif user_order[-4:] == '.csv':
             create(user_order)
             menu()
+            final_order.clear()
         elif user_order == 'menu':
             menu()
         elif user_order == 'quit':
