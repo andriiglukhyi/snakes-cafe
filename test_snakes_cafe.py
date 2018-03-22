@@ -28,9 +28,9 @@ def test_search():
     """search for spesick menu item and will print all item inside that
     menu item"""
     key = 'entrees'
-    assert snakes_cafe.search(key) == ['salmon', 'steak', 'country fried '
+    assert snakes_cafe.search(key) == sorted(['salmon', 'steak', 'country fried '
                                        'chicken', 'chopped grilled angus',
-                                       'crispy fish tacos', 'meat'                                        'tornado'].sort()
+                                       'crispy fish tacos', 'meat'                                        'tornado'])
 
 
 def test_remove_0():
@@ -58,7 +58,8 @@ def test_add_to_order():
 def test_search_type_output():
     """check if output is list"""
     item = 'entrees'
-    assert type(snakes_cafe.search(item)) == list
+    print(type(snakes_cafe.search(item)))
+    assert 'salmon' in snakes_cafe.search(item)
 
 # def test_search_not_in_menu():
 #     """check if item not in menu"""
