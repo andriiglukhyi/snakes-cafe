@@ -203,10 +203,9 @@ def stock(name, number):
     num = 1
     if name != number:
         try:
-            num = int(number.split(' ')[1])
+            num = int(number.rsplit(' ', 1)[1])
         except ValueError:
             pass
-    print(num)
     if num <= menu_items[category][name][1]:
         menu_items[category][name][1] -= num
         return True
