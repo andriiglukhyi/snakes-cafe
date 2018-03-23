@@ -50,18 +50,28 @@ class Order:
         a += ('\n' + '-' * 10 + '\nTotal Due {:>51.2f}\n'.format(subtotal + tax))
         with open('receipts/'+ self.id + '.txt', 'w' ) as f:
             f.write(a)
+            
     
     def remove(self, key):
         """
         Removes one instance of a food item from the order, deletes it if it no
         longer exists
         """
-        if key in self.final_order:
-            self.final_order[key] -= 1
-            if self.final_order[key] == 0:
-                del self.final_order[key]
-        print('Your current total is ${:.2f}\n'.format(self._bill()))
-    
+        key = key.rsplit(' ', 1)
+        if len(key) == 1 or type(int(key[1])) is not int:
+            key = key[0]
+            if key in self.final_order:
+                self.final_order[key] -= 1
+                if self.final_order[key] == 0:
+                    del self.final_order[key]
+            print('Your current total is ${:.2f}\n'.format(self._bill()))
+        else:
+            if key[0] in self.final_order:
+                self.final_order[key[0]] -= int(key[1])
+                if self.final_order[key[0]] == 0:
+                    del self.final_order[key[0]]
+            print('Your current total is ${:.2f}\n'.format(self._bill()))
+
     def display_order(self):
 
         """
