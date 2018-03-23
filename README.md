@@ -1,11 +1,11 @@
 # Snakes Cafe
 
 **Author**: Andrii Glukhyi & Austin Matteson
-**Version**: 3.0.0 
+**Version**: 4.0.0 
 
 ## Overview
 <!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for a Code Fellows 401 class. (i.e. What's your problem domain?) -->
-This application is a command line restaurant. It allows the user to place an order from a specified menu. It will count how many times each item was ordered and total a price. It allows the user to view their entire order and remove items they don't want. It was block users from ordering more items than available. A user can import their own menu and quit from the program.
+This application is a command line restaurant using classes for orders. It allows the user to place an order from a specified menu. It will count how many times each item was ordered and total a price. It allows the user to view their entire order and remove items they don't want. It was block users from ordering more items than available. A user can import their own menu, print their receipt and quit from the program.
 
 ## Getting Started
 <!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
@@ -24,9 +24,8 @@ None.
 
 01-01-2001 4:59pm - Added functionality to add and delete some things.
 -->
-03-20-2018 8:00pm - test fixes
-03-20-2018 7:00pm - fixes for multi word food items
-03-20-2018 6:00pm - fix for if order off first menu and item isn't on new one after switching
-03-20-2018 5:00pm - linter errors
-03-20-2018 4:00pm - add empty csv file and app have structure for reading new file
-03-20-2018 2:00pm - test plan
+03-22-2018 7:00pm - docstrings, linter errors, readme, testmd
+03-22-2018 6:00pm - tests
+03-22-2018 5:30pm - stock bug
+03-22-2018 5:00pm - write to file
+03-22-2018 4:00pm - class/method functionality
