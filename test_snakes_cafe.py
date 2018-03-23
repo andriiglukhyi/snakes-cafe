@@ -5,23 +5,22 @@ snakes_cafe.menu_items = snakes_cafe.default_items
 
 def test_remove():
     """add 1 to the current value"""
-    snakes_cafe.final_order['tea'] = 5
-    snakes_cafe.remove('tea')
-    assert snakes_cafe.final_order['tea'] == 4
+    snakes_cafe.new_order.final_order['tea'] = 5
+    snakes_cafe.new_order.remove('tea')
+    assert snakes_cafe.new_order.final_order['tea'] == 4
 
 
 def test_order_total():
     """count the total"""
-    snakes_cafe.final_order['wings'] = 1
-    snakes_cafe.final_order['tea'] = 3
-    assert snakes_cafe.order_total() == 19.02
-
+    snakes_cafe.new_order.final_order['wings'] = 1
+    snakes_cafe.new_order.final_order['tea'] = 3
+    assert snakes_cafe.new_order.display_order() == 19.02
 
 def test_bill():
     """count the bill for"""
-    snakes_cafe.final_order['wings'] = 20
-    snakes_cafe.final_order['tea'] = 20
-    assert snakes_cafe.bill() == 289
+    snakes_cafe.new_order.final_order['wings'] = 20
+    snakes_cafe.new_order.final_order['tea'] = 20
+    assert snakes_cafe.new_order._bill() == 289
 
 
 def test_search():
@@ -38,24 +37,30 @@ def test_search():
 
 def test_remove_0():
     """check if function will remove one item from order."""
-    snakes_cafe.final_order['tea'] = 1
-    snakes_cafe.remove('tea')
-    assert 'tea' not in snakes_cafe.final_order.keys()
+    snakes_cafe.new_order.final_order['tea'] = 1
+    snakes_cafe.new_order.remove('tea')
+    assert 'tea' not in snakes_cafe.new_order.final_order.keys()
 
 
 def test_add_to_order_one_elemant():
     """Check current order if we add one element two identical items."""
-    snakes_cafe.final_order = {}
-    snakes_cafe.add_to_order('cake')
-    snakes_cafe.add_to_order('cake')
-    assert len(snakes_cafe.final_order) == 1
+    snakes_cafe.new_order.final_order = {}
+    snakes_cafe.new_order.add_item('cake', 'cake')
+    snakes_cafe.new_order.add_item('cake', 'cake')
+    assert len(snakes_cafe.new_order.final_order) == 1
 
 
 def test_add_to_order():
     """check if the current backet will change if we add one item."""
-    snakes_cafe.final_order['wings'] = 10
-    snakes_cafe.add_to_order('wings')
-    assert snakes_cafe.final_order['wings'] == 11
+    snakes_cafe.new_order.final_order['wings'] = 10
+    snakes_cafe.new_order.add_item('wings', 'wings')
+    assert snakes_cafe.new_order.final_order['wings'] == 11
+
+def test_add_to_order_couple_items():
+    """check if the current backet will change if we add one item."""
+    snakes_cafe.new_order.final_order['wings'] = 6
+    snakes_cafe.new_order.add_item('wings', 'wings 4')
+    assert snakes_cafe.new_order.final_order['wings'] == 10
 
 
 def test_search_type_output():
@@ -68,27 +73,21 @@ def test_multi_order():
     """add o item to oted"""
     nam = 'tea'
     val = 'tea 2'
-    snakes_cafe.multi_order(nam,val)
-    assert snakes_cafe.final_order[nam] == 2
-
-def test_multi_order_no_items():
-    """check when order has 0 as a ampunt of item"""
-    nam = 'tea'
-    val = 'tea 0'
-    assert snakes_cafe.multi_order(nam,val) == 1
+    snakes_cafe.new_order.add_item(nam,val)
+    assert snakes_cafe.new_order.final_order[nam] == 2
 
 def test_order_total_with_one_0():
     """count the total when 1 element is 0"""
-    snakes_cafe.final_order = {}
-    snakes_cafe.final_order['wings'] = 0
-    snakes_cafe.final_order['tea'] = 3
-    assert snakes_cafe.order_total() == 4.77
+    snakes_cafe.new_order.final_order = {}
+    snakes_cafe.new_order.final_order['wings'] = 0
+    snakes_cafe.new_order.final_order['tea'] = 3
+    assert snakes_cafe.new_order.display_order() == 4.77
 
 def test_bill_when_one_order_is_more_then_quantity():
     """check when items is out of stock"""
-    snakes_cafe.final_order['cake'] = 40
-    snakes_cafe.final_order['tea'] = 5
-    assert snakes_cafe.bill() == 154.05
+    snakes_cafe.new_order.final_order['cake'] = 40
+    snakes_cafe.new_order.final_order['tea'] = 5
+    assert snakes_cafe.new_order._bill() == 154.05
 
 def test_find_item_in_menu():
     """find if menu exist"""
@@ -104,13 +103,13 @@ def test_stock_if_not_enougth():
     """check if enougth items in stock"""
     name = 'tea'
     namber = 'tea 100'
-    assert snakes_cafe.stock(name,namber) == False
+    assert snakes_cafe.new_order._stock(name,namber) == False
 
 def test_stock_if_enougth():
     """check if enougth items in stock"""
     name = 'tea'
     namber = 'tea 1'
-    assert snakes_cafe.stock(name,namber) == True
+    assert snakes_cafe.new_order._stock(name,namber) == True
 
 def test_create_broken_path():
     """check if path is broken"""
