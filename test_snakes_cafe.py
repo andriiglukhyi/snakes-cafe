@@ -88,7 +88,7 @@ def test_order_total_with_one_0():
 
 
 def test_bill_when_one_order_is_more_then_quantity():
-    """Check when items is out of stock."""
+    """Check when items more than quanity, bill is correct."""
     snakes_cafe.new_order.final_order['cake'] = 40
     snakes_cafe.new_order.final_order['tea'] = 5
     assert snakes_cafe.new_order._bill() == 154.05

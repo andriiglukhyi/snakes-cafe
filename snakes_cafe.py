@@ -222,6 +222,12 @@ def menu():
 **    Welcome to the Snakes Cafe!   **
 **    Please see our menu below.    **
 **
+**    A filepath ending in .csv     **
+**      can be used as a menu       **
+**
+**     "order" will show bill       **
+**    "print" print your reciept    **
+**
 ** To quit at any time, type "quit" **
 **************************************''')
     print('\nAppitizers' + '\n' + '-------------')
