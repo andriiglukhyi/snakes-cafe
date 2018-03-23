@@ -1,5 +1,158 @@
 import uuid
 
+class Order:
+    """Classs for new orders"""
+    def __init__(self):
+        self.id = str(uuid.uuid1())
+        self.final_order = {}
+    
+    def __repr__(self):
+        print('Order {} | items : {} | total : {:.2f}'.format(self.id, self.__len__(), self._bill()))
+
+    def __len__(self):
+        return sum(self.final_order.values())
+
+
+    def add_item(self, food, multifood):
+        """
+        Adds the chosen food item to the running order and prints a response and
+        current subtotal
+        """
+        if food == multifood and self._stock(food, multifood) is True:
+            self.final_order[food] = 1 + self.final_order.get(food, 0)
+            print('\n ** {} total order(s) of {} has been added to your meal ** \n **'
+            'Your order cost is {:.2f} **\n'.format(self.final_order[food], food,
+                                                    self._bill()))
+        elif self._stock(food, multifood) is True:
+            self._multi_order(food, multifood)
+    
+    def print(self):
+        a = ''
+        a += ('\n' + '*' * 61 + '\n' + 'The Snakes Cafe' + '\n' + 'Order ' +
+            self.id + '\n' + '=' * 61)
+        subtotal = self._bill()
+        for key, val in self.final_order.items():
+            if key in menu_items['appitizers']:
+                price = menu_items['appitizers'].get(key)[0]*val
+            elif key in menu_items['entrees']:
+                price = menu_items['entrees'].get(key)[0]*val
+            elif key in menu_items['desserts']:
+                price = menu_items['desserts'].get(key)[0]*val
+            elif key in menu_items['drinks']:
+                price = menu_items['drinks'].get(key)[0]*val
+            elif key in menu_items['sides']:
+                price = menu_items['sides'].get(key)[0] * val
+            to_output = ('{} x {}'.format(key, val))
+            a += ('\n{:<30} {:>30.2f}'.format(to_output, price))
+        tax = subtotal * 0.096
+        a += ('\n' + '-' * 61 + '\nSubtotal {:>52.2f}'.format(subtotal))
+        a += ('\nSales Tax {:>51.2f}'.format(tax))
+        a += ('\n' + '-' * 10 + '\nTotal Due {:>51.2f}\n'.format(subtotal + tax))
+        with open('receipts/'+ self.id + '.txt', 'w' ) as f:
+            f.write(a)
+    
+    def remove(self, key):
+        """
+        Removes one instance of a food item from the order, deletes it if it no
+        longer exists
+        """
+        if key in self.final_order:
+            self.final_order[key] -= 1
+            if self.final_order[key] == 0:
+                del self.final_order[key]
+        print('Your current total is ${:.2f}\n'.format(self._bill()))
+    
+    def display_order(self):
+
+        """
+        Prints a reciept of each food items prices, a subtotal, tax, and final cost
+        """
+        print('\n' + '*' * 61 + '\n' + 'The Snakes Cafe' + '\n' + 'Order ' +
+            self.id + '\n' + '=' * 61)
+        subtotal = self._bill()
+        for key, val in self.final_order.items():
+            if key in menu_items['appitizers']:
+                price = menu_items['appitizers'].get(key)[0]*val
+            elif key in menu_items['entrees']:
+                price = menu_items['entrees'].get(key)[0]*val
+            elif key in menu_items['desserts']:
+                price = menu_items['desserts'].get(key)[0]*val
+            elif key in menu_items['drinks']:
+                price = menu_items['drinks'].get(key)[0]*val
+            elif key in menu_items['sides']:
+                price = menu_items['sides'].get(key)[0] * val
+            to_output = ('{} x {}'.format(key, val))
+            print('{:<30} {:>30.2f}'.format(to_output, price))
+        tax = subtotal * 0.096
+        print('-' * 61 + '\nSubtotal {:>52.2f}'.format(subtotal))
+        print('Sales Tax {:>51.2f}'.format(tax))
+        print('-' * 10 + '\nTotal Due {:>51.2f}\n'.format(subtotal + tax))
+        return round(subtotal+tax, 2)
+    
+    def _stock(self, name, number):
+
+        """ check if item in stock"""
+        category = find(name)
+        num = 1
+        if name != number:
+            try:
+                num = int(number.rsplit(' ', 1)[1])
+            except ValueError:
+                pass
+        if num <= menu_items[category][name][1]:
+            menu_items[category][name][1] -= num
+            return True
+        else:
+            print('Not enough stock')
+            return False
+
+
+    def _multi_order(self, name, item):
+        """add a couple item to the order"""
+        quant = 0
+        try:
+            quant = int(item.rsplit(' ', 1)[1])
+        except ValueError:
+            pass
+        if quant <= 0:
+            print('Sorry it\'s not a value')
+            return 1
+        else:
+            self.final_order[name] = quant + self.final_order.get(name, 0)
+            print('\n ** {} total order(s) of {} has been added to your meal ** \n'
+                '** Your order cost is {:.2f} **\n'.format(self.final_order[name],
+                                                            name, self._bill()))
+
+    def _bill(self):
+        """
+        Sums a subtotal of selected menu items prices
+        """
+        subtotal = 0
+        for key, val in self.final_order.items():
+            if key in menu_items['appitizers']:
+                subtotal += menu_items['appitizers'].get(key)[0] * val
+            elif key in menu_items['entrees']:
+                subtotal += menu_items['entrees'].get(key)[0]*val
+            elif key in menu_items['desserts']:
+                subtotal += menu_items['desserts'].get(key)[0]*val
+            elif key in menu_items['drinks']:
+                subtotal += menu_items['drinks'].get(key)[0]*val
+            elif key in menu_items['sides']:
+                subtotal += menu_items['sides'].get(key)[0] * val
+        return subtotal
+
+
+
+
+def find(inner_key):
+    for key in menu_items.keys():
+        if inner_key in menu_items[key]:
+            return key
+    return 0
+
+new_order = Order()
+
+
 default_items = {
     'appitizers': {
         'wings': [13.00, 10],
@@ -57,9 +210,6 @@ default_items = {
         'an on fire garbage can': [0.01, 9001]
     }
 }
-final_order = {}
-order_number = str(uuid.uuid1())
-
 
 def menu():
     """
@@ -103,117 +253,6 @@ def search(key):
     return sorted(a)
 
 
-def add_to_order(food):
-    """
-    Adds the chosen food item to the running order and prints a response and
-    current subtotal
-    """
-    final_order[food] = 1 + final_order.get(food, 0)
-    print('\n ** {} total order(s) of {} has been added to your meal ** \n **'
-          'Your order cost is {:.2f} **\n'.format(final_order[food], food,
-                                                  bill()))
-
-
-def multi_order(name, item):
-    """
-    add a couple item to the order
-    """
-    quant = 0
-    try:
-        quant = int(item.rsplit(' ', 1)[1])
-    except ValueError:
-        pass
-    if quant <= 0:
-        print('Sorry it\'s not a value')
-        return 1
-    else:
-        final_order[name] = quant + final_order.get(name, 0)
-        print('\n ** {} total order(s) of {} has been added to your meal ** \n'
-              '** Your order cost is {:.2f} **\n'.format(final_order[name],
-                                                         name, bill()))
-
-
-def bill():
-    """
-    Sums a subtotal of selected menu items prices
-    """
-    subtotal = 0
-    for key, val in final_order.items():
-        if key in menu_items['appitizers']:
-            subtotal += menu_items['appitizers'].get(key)[0] * val
-        elif key in menu_items['entrees']:
-            subtotal += menu_items['entrees'].get(key)[0]*val
-        elif key in menu_items['desserts']:
-            subtotal += menu_items['desserts'].get(key)[0]*val
-        elif key in menu_items['drinks']:
-            subtotal += menu_items['drinks'].get(key)[0]*val
-        elif key in menu_items['sides']:
-            subtotal += menu_items['sides'].get(key)[0] * val
-    return subtotal
-
-
-def order_total():
-    """
-    Prints a reciept of each food items prices, a subtotal, tax, and final cost
-    """
-    print('\n' + '*' * 61 + '\n' + 'The Snakes Cafe' + '\n' + 'Order ' +
-          order_number + '\n' + '=' * 61)
-    subtotal = bill()
-    for key, val in final_order.items():
-        if key in menu_items['appitizers']:
-            price = menu_items['appitizers'].get(key)[0]*val
-        elif key in menu_items['entrees']:
-            price = menu_items['entrees'].get(key)[0]*val
-        elif key in menu_items['desserts']:
-            price = menu_items['desserts'].get(key)[0]*val
-        elif key in menu_items['drinks']:
-            price = menu_items['drinks'].get(key)[0]*val
-        elif key in menu_items['sides']:
-            price = menu_items['sides'].get(key)[0] * val
-        to_output = ('{} x {}'.format(key, val))
-        print('{:<30} {:>30.2f}'.format(to_output, price))
-    tax = subtotal * 0.096
-    print('-' * 61 + '\nSubtotal {:>52.2f}'.format(subtotal))
-    print('Sales Tax {:>51.2f}'.format(tax))
-    print('-' * 10 + '\nTotal Due {:>51.2f}\n'.format(subtotal + tax))
-    return round(subtotal+tax, 2)
-
-
-def remove(key):
-    """
-    Removes one instance of a food item from the order, deletes it if it no
-    longer exists
-    """
-    if key in final_order:
-        final_order[key] -= 1
-        if final_order[key] == 0:
-            del final_order[key]
-    print('Your current total is ${:.2f}\n'.format(bill()))
-
-
-def find(inner_key):
-    for key in menu_items.keys():
-        if inner_key in menu_items[key]:
-            return key
-    return 0
-
-
-def stock(name, number):
-    category = find(name)
-    num = 1
-    if name != number:
-        try:
-            num = int(number.rsplit(' ', 1)[1])
-        except ValueError:
-            pass
-    if num <= menu_items[category][name][1]:
-        menu_items[category][name][1] -= num
-        return True
-    else:
-        print('Not enough stock')
-        return False
-
-
 def open_and_read(path):
     menu_csv = {}
     with open(path, 'r') as f:
@@ -251,22 +290,21 @@ def cafe():
         if (order in menu_items['appitizers'] or order in
             menu_items['entrees'] or order in menu_items['desserts'] or
            order in menu_items['drinks'] or order in menu_items['sides']):
-            if order == user_order and stock(order, user_order) is True:
-                add_to_order(order)
-            elif stock(order, user_order) is True:
-                multi_order(order, user_order)
+            new_order.add_item(order, user_order)
         elif user_order in menu_items.keys():
             search(order)
         elif user_order == 'order':
-            order_total()
+            new_order.display_order()
         elif user_order.split(' ')[0] == 'remove':
-            remove(user_order.split(' ', 1)[1])
+            new_order.remove(user_order.split(' ', 1)[1])
         elif user_order[-4:] == '.csv':
             create(user_order)
             menu()
-            final_order.clear()
+            new_order.final_order.clear()
         elif user_order == 'menu':
             menu()
+        elif user_order == 'print':
+            new_order.print()
         elif user_order == 'quit':
             break
         else:
