@@ -166,7 +166,10 @@ default_items = {
         'mozzarella': [12.45, 11],
         'small salad': [6.00, 40],
         'bread': [5.50, 100],
-        'baby legs': [0.99, 2]
+        'baby legs': [0.99, 2],
+        'sliders': [10.00, 10],
+        'chips': [3.50, 400],
+        'salsa': [1.24, 400]
     },
     'entrees': {
         'salmon': [23.55, 20],
@@ -177,7 +180,10 @@ default_items = {
         'meat tornado': [11.45, 13],
         'fish sticks': [12.32, 10],
         'taylor swift': [89.21, 1],
-        'nomnomnom': [1.00, 50]
+        'nomnomnom': [1.00, 50],
+        'pasta': [16.00, 30],
+        'roast': [24.34, 20],
+        'pig feet': [10.99, 4]
     },
     'desserts': {
         'ice cream': [2.17, 12],
@@ -188,7 +194,10 @@ default_items = {
         'pie': [23.45, 34],
         'more pie': [23.46, 35],
         'burger shake': [16.20, 20],
-        'snack': [3.50, 350]
+        'snack': [3.50, 350],
+        'cream': [0.50, 1000],
+        'popsicle': [1.00, 50],
+        'tongues': [0.69, 69]
     },
     'drinks': {
         'coffee': [2.24, 34],
@@ -199,7 +208,10 @@ default_items = {
         'blood': [10.00, 23],
         'tequila': [20.00, 20],
         'tears': [100.99, 1000],
-        'swamp juice': [0.23, 23]
+        'swamp juice': [0.23, 23],
+        'whiskey': [10.99, 99],
+        'beer': [5.00, 500],
+        'wine': [6.00, 500]
     },
     'sides': {
         'onion rings': [10.45, 12],
@@ -210,7 +222,10 @@ default_items = {
         'steamed fresh veggies': [40.00, 40],
         'rice': [1.20, 120],
         'cheese': [17.38, 30],
-        'an on fire garbage can': [0.01, 9001]
+        'an on fire garbage can': [0.01, 9001],
+        'angels': [99999.99, 2],
+        'devils': [0.00, 100000],
+        'me': [1000000000.00, 1]
     }
 }
 

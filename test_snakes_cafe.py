@@ -32,7 +32,8 @@ def test_search():
                                               'grilled angus', 'crispy fish '
                                               'tacos', 'meat tornado', 'fish '
                                               'sticks', 'taylor swift',
-                                              'nomnomnom'])
+                                              'nomnomnom', 'pasta', 'roast',
+                                              'pig feet'])
 
 
 def test_remove_0():
