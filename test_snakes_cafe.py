@@ -56,6 +56,7 @@ def test_add_to_order():
     snakes_cafe.new_order.add_item('wings', 'wings')
     assert snakes_cafe.new_order.final_order['wings'] == 11
 
+
 def test_add_to_order_couple_items():
     """check if the current backet will change if we add one item."""
     snakes_cafe.new_order.final_order['wings'] = 6
@@ -69,12 +70,14 @@ def test_search_type_output():
     print(type(snakes_cafe.search(item)))
     assert 'salmon' in snakes_cafe.search(item)
 
+
 def test_multi_order():
     """add o item to oted"""
     nam = 'tea'
     val = 'tea 2'
-    snakes_cafe.new_order.add_item(nam,val)
+    snakes_cafe.new_order.add_item(nam, val)
     assert snakes_cafe.new_order.final_order[nam] == 2
+
 
 def test_order_total_with_one_0():
     """count the total when 1 element is 0"""
@@ -83,36 +86,40 @@ def test_order_total_with_one_0():
     snakes_cafe.new_order.final_order['tea'] = 3
     assert snakes_cafe.new_order.display_order() == 4.77
 
+
 def test_bill_when_one_order_is_more_then_quantity():
     """check when items is out of stock"""
     snakes_cafe.new_order.final_order['cake'] = 40
     snakes_cafe.new_order.final_order['tea'] = 5
     assert snakes_cafe.new_order._bill() == 154.05
 
+
 def test_find_item_in_menu():
     """find if menu exist"""
     item = 'tea'
     assert snakes_cafe.find(item) == 'drinks'
+
 
 def test_find_item_not_in_menu():
     """when menu not exist"""
     item = 'notinmenu'
     assert snakes_cafe.find(item) == 0
 
+
 def test_stock_if_not_enougth():
     """check if enougth items in stock"""
     name = 'tea'
     namber = 'tea 100'
-    assert snakes_cafe.new_order._stock(name,namber) == False
+    assert snakes_cafe.new_order._stock(name, namber) is False
+
 
 def test_stock_if_enougth():
     """check if enougth items in stock"""
     name = 'tea'
     namber = 'tea 1'
-    assert snakes_cafe.new_order._stock(name,namber) == True
+    assert snakes_cafe.new_order._stock(name, namber) is True
+
 
 def test_create_broken_path():
     """check if path is broken"""
     assert snakes_cafe.create('wdwdw.csv') == snakes_cafe.default_items
-
-
