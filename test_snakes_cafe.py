@@ -114,5 +114,3 @@ def test_stock_if_enougth():
 def test_create_broken_path():
     """check if path is broken"""
     assert snakes_cafe.create('wdwdw.csv') == snakes_cafe.default_items
-
-
