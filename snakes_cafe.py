@@ -1,35 +1,37 @@
 import uuid
 
+
 class Order:
-    """Classs for new orders"""
+    """Class for new orders."""
     def __init__(self):
+        """Initialize ID and dictionary of items ordered."""
         self.id = str(uuid.uuid1())
         self.final_order = {}
-    
+
     def __repr__(self):
-        print('Order {} | items : {} | total : {:.2f}'.format(self.id, self.__len__(), self._bill()))
+        """Represent user's order."""
+        print('Order {} | items : {} | total : {:.2f}'.format(self.id,
+              self.__len__(), self._bill()))
 
     def __len__(self):
+        """Number of items in order."""
         return sum(self.final_order.values())
 
-
     def add_item(self, food, multifood):
-        """
-        Adds the chosen food item to the running order and prints a response and
-        current subtotal
-        """
+        """Add a food item to the running order."""
         if food == multifood and self._stock(food, multifood) is True:
             self.final_order[food] = 1 + self.final_order.get(food, 0)
-            print('\n ** {} total order(s) of {} has been added to your meal ** \n **'
-            'Your order cost is {:.2f} **\n'.format(self.final_order[food], food,
-                                                    self._bill()))
+            print('\n ** {} total order(s) of {} has been added to your meal *'
+                  '*\n **Your order cost is {:.2f} **\n'
+                  .format(self.final_order[food], food, self._bill()))
         elif self._stock(food, multifood) is True:
             self._multi_order(food, multifood)
-    
+
     def print(self):
+        """Create or overwrite file with reciept of current order."""
         a = ''
         a += ('\n' + '*' * 61 + '\n' + 'The Snakes Cafe' + '\n' + 'Order ' +
-            self.id + '\n' + '=' * 61)
+              self.id + '\n' + '=' * 61)
         subtotal = self._bill()
         for key, val in self.final_order.items():
             if key in menu_items['appitizers']:
@@ -47,16 +49,13 @@ class Order:
         tax = subtotal * 0.096
         a += ('\n' + '-' * 61 + '\nSubtotal {:>52.2f}'.format(subtotal))
         a += ('\nSales Tax {:>51.2f}'.format(tax))
-        a += ('\n' + '-' * 10 + '\nTotal Due {:>51.2f}\n'.format(subtotal + tax))
-        with open('receipts/'+ self.id + '.txt', 'w' ) as f:
+        a += ('\n' + '-' * 10 + '\nTotal Due {:>51.2f}\n'.format(subtotal +
+              tax))
+        with open('receipts/' + self.id + '.txt', 'w') as f:
             f.write(a)
-            
-    
+
     def remove(self, key):
-        """
-        Removes one instance of a food item from the order, deletes it if it no
-        longer exists
-        """
+        """Remove a food item from the order."""
         key = key.rsplit(' ', 1)
         if len(key) == 1 or type(int(key[1])) is not int:
             key = key[0]
@@ -64,21 +63,20 @@ class Order:
                 self.final_order[key] -= 1
                 if self.final_order[key] == 0:
                     del self.final_order[key]
+                menu_items[find(key)][key][1] += 1
             print('Your current total is ${:.2f}\n'.format(self._bill()))
         else:
             if key[0] in self.final_order:
                 self.final_order[key[0]] -= int(key[1])
                 if self.final_order[key[0]] == 0:
                     del self.final_order[key[0]]
+                menu_items[find(key[0])][key[0]][1] += int(key[1])
             print('Your current total is ${:.2f}\n'.format(self._bill()))
 
     def display_order(self):
-
-        """
-        Prints a reciept of each food items prices, a subtotal, tax, and final cost
-        """
+        """Display reciept of current order."""
         print('\n' + '*' * 61 + '\n' + 'The Snakes Cafe' + '\n' + 'Order ' +
-            self.id + '\n' + '=' * 61)
+              self.id + '\n' + '=' * 61)
         subtotal = self._bill()
         for key, val in self.final_order.items():
             if key in menu_items['appitizers']:
@@ -98,10 +96,9 @@ class Order:
         print('Sales Tax {:>51.2f}'.format(tax))
         print('-' * 10 + '\nTotal Due {:>51.2f}\n'.format(subtotal + tax))
         return round(subtotal+tax, 2)
-    
-    def _stock(self, name, number):
 
-        """ check if item in stock"""
+    def _stock(self, name, number):
+        """Check if item is in stock."""
         category = find(name)
         num = 1
         if name != number:
@@ -116,9 +113,8 @@ class Order:
             print('Not enough stock')
             return False
 
-
     def _multi_order(self, name, item):
-        """add a couple item to the order"""
+        """Add multiple items to the order."""
         quant = 0
         try:
             quant = int(item.rsplit(' ', 1)[1])
@@ -129,14 +125,12 @@ class Order:
             return 1
         else:
             self.final_order[name] = quant + self.final_order.get(name, 0)
-            print('\n ** {} total order(s) of {} has been added to your meal ** \n'
-                '** Your order cost is {:.2f} **\n'.format(self.final_order[name],
-                                                            name, self._bill()))
+            print('\n ** {} total order(s) of {} has been added to your meal *'
+                  '* \n** Your order cost is {:.2f} **\n'
+                  .format(self.final_order[name], name, self._bill()))
 
     def _bill(self):
-        """
-        Sums a subtotal of selected menu items prices
-        """
+        """Sum a subtotal of selected menu items prices."""
         subtotal = 0
         for key, val in self.final_order.items():
             if key in menu_items['appitizers']:
@@ -152,16 +146,15 @@ class Order:
         return subtotal
 
 
-
-
 def find(inner_key):
+    """Find menu categories."""
     for key in menu_items.keys():
         if inner_key in menu_items[key]:
             return key
     return 0
 
-new_order = Order()
 
+new_order = Order()
 
 default_items = {
     'appitizers': {
@@ -173,7 +166,10 @@ default_items = {
         'mozzarella': [12.45, 11],
         'small salad': [6.00, 40],
         'bread': [5.50, 100],
-        'baby legs': [0.99, 2]
+        'baby legs': [0.99, 2],
+        'sliders': [10.00, 10],
+        'chips': [3.50, 400],
+        'salsa': [1.24, 400]
     },
     'entrees': {
         'salmon': [23.55, 20],
@@ -184,7 +180,10 @@ default_items = {
         'meat tornado': [11.45, 13],
         'fish sticks': [12.32, 10],
         'taylor swift': [89.21, 1],
-        'nomnomnom': [1.00, 50]
+        'nomnomnom': [1.00, 50],
+        'pasta': [16.00, 30],
+        'roast': [24.34, 20],
+        'pig feet': [10.99, 4]
     },
     'desserts': {
         'ice cream': [2.17, 12],
@@ -195,7 +194,10 @@ default_items = {
         'pie': [23.45, 34],
         'more pie': [23.46, 35],
         'burger shake': [16.20, 20],
-        'snack': [3.50, 350]
+        'snack': [3.50, 350],
+        'cream': [0.50, 1000],
+        'popsicle': [1.00, 50],
+        'tongues': [0.69, 69]
     },
     'drinks': {
         'coffee': [2.24, 34],
@@ -206,7 +208,10 @@ default_items = {
         'blood': [10.00, 23],
         'tequila': [20.00, 20],
         'tears': [100.99, 1000],
-        'swamp juice': [0.23, 23]
+        'swamp juice': [0.23, 23],
+        'whiskey': [10.99, 99],
+        'beer': [5.00, 500],
+        'wine': [6.00, 500]
     },
     'sides': {
         'onion rings': [10.45, 12],
@@ -217,19 +222,26 @@ default_items = {
         'steamed fresh veggies': [40.00, 40],
         'rice': [1.20, 120],
         'cheese': [17.38, 30],
-        'an on fire garbage can': [0.01, 9001]
+        'an on fire garbage can': [0.01, 9001],
+        'angels': [99999.99, 2],
+        'devils': [0.00, 100000],
+        'me': [1000000000.00, 1]
     }
 }
 
+
 def menu():
-    """
-    Prints the menu by retrieving every key from every dictionary in the
-    menu_items dictionary
-    """
+    """Prints the menu."""
     print('''
 **************************************
 **    Welcome to the Snakes Cafe!   **
 **    Please see our menu below.    **
+**
+**    A filepath ending in .csv     **
+**      can be used as a menu       **
+**
+**     "order" will show bill       **
+**    "print" print your reciept    **
 **
 ** To quit at any time, type "quit" **
 **************************************''')
@@ -253,9 +265,7 @@ def menu():
 
 
 def search(key):
-    """
-    Searches the dictionary to print the set of keys from a specific meal
-    """
+    """Search the dictionary to print the set of keys from a specific meal."""
     a = []
     for food in menu_items[key].keys():
         a.append(food)
@@ -264,6 +274,7 @@ def search(key):
 
 
 def open_and_read(path):
+    """Create menu from csv."""
     menu_csv = {}
     with open(path, 'r') as f:
         test = f.read().split('\n')
@@ -279,6 +290,7 @@ def open_and_read(path):
 
 
 def create(filepath):
+    """Use csv menu if possible."""
     try:
         global menu_items
         menu_items = open_and_read(filepath)
@@ -287,8 +299,7 @@ def create(filepath):
 
 
 def cafe():
-    """Handles user input to call correct functions."""
-
+    """Handle user input to call correct methods and functions."""
     while True:
         user_order = input('> ').lower()
         try:
@@ -322,6 +333,7 @@ def cafe():
 
 
 if __name__ == '__main__':
+    """Run the app."""
     try:
         menu_items = create(None)
         menu()
