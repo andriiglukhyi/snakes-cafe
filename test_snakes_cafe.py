@@ -6,7 +6,7 @@ snakes_cafe.menu_items = snakes_cafe.default_items
 def test_remove():
     """Add 1 to the current value."""
     snakes_cafe.new_order.final_order['tea'] = 5
-    snakes_cafe.new_order.remove('tea')
+    snakes_cafe.new_order.remove_item('tea')
     assert snakes_cafe.new_order.final_order['tea'] == 4
 
 
@@ -14,14 +14,14 @@ def test_order_total():
     """Count the total."""
     snakes_cafe.new_order.final_order['wings'] = 1
     snakes_cafe.new_order.final_order['tea'] = 3
-    assert snakes_cafe.new_order.display_order() == 19.02
+    assert snakes_cafe.new_order.print_receipt() == 19.02
 
 
-def test_bill():
+def test_print_receipt():
     """Count the bill."""
     snakes_cafe.new_order.final_order['wings'] = 20
     snakes_cafe.new_order.final_order['tea'] = 20
-    assert snakes_cafe.new_order._bill() == 289
+    assert snakes_cafe.new_order.print_receipt() == 316.74
 
 
 def test_search():
@@ -39,7 +39,7 @@ def test_search():
 def test_remove_0():
     """Check if function will remove one item from order."""
     snakes_cafe.new_order.final_order['tea'] = 1
-    snakes_cafe.new_order.remove('tea')
+    snakes_cafe.new_order.remove_item('tea')
     assert 'tea' not in snakes_cafe.new_order.final_order.keys()
 
 
@@ -85,14 +85,14 @@ def test_order_total_with_one_0():
     snakes_cafe.new_order.final_order = {}
     snakes_cafe.new_order.final_order['wings'] = 0
     snakes_cafe.new_order.final_order['tea'] = 3
-    assert snakes_cafe.new_order.display_order() == 4.77
+    assert snakes_cafe.new_order.print_receipt() == 4.77
 
 
-def test_bill_when_one_order_is_more_then_quantity():
+def test_print_receipt_when_one_order_is_more_then_quantity():
     """Check when items more than quanity, bill is correct."""
     snakes_cafe.new_order.final_order['cake'] = 40
     snakes_cafe.new_order.final_order['tea'] = 5
-    assert snakes_cafe.new_order._bill() == 154.05
+    assert snakes_cafe.new_order.print_receipt() == 168.84
 
 
 def test_find_item_in_menu():
@@ -124,3 +124,14 @@ def test_stock_if_enougth():
 def test_create_broken_path():
     """Check if path is broken."""
     assert snakes_cafe.create('wdwdw.csv') == snakes_cafe.default_items
+
+
+def test_init():
+    """test init function"""
+    new_obj = snakes_cafe.Order()
+    assert new_obj.final_order == {}
+
+
+def test_serch_():
+    """test repr function"""
+    assert snakes_cafe.find('tea') == 'drinks'
