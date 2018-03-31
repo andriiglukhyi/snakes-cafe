@@ -11,7 +11,7 @@ class Order:
     def __repr__(self):
         """Represent user's order."""
         print('Order {} | items : {} | total : {:.2f}'.format(self.id,
-              self.__len__(), self._bill()))
+              self.__len__(), self.display_order()))
 
     def __len__(self):
         """Number of items in order."""
@@ -23,7 +23,7 @@ class Order:
             self.final_order[food] = 1 + self.final_order.get(food, 0)
             print('\n ** {} total order(s) of {} has been added to your meal *'
                   '*\n **Your order cost is {:.2f} **\n'
-                  .format(self.final_order[food], food, self._bill()))
+                  .format(self.final_order[food], food, self.display_order()))
         elif self._stock(food, multifood) is True:
             self._multi_order(food, multifood)
 
@@ -32,7 +32,7 @@ class Order:
         a = ''
         a += ('\n' + '*' * 61 + '\n' + 'The Snakes Cafe' + '\n' + 'Order ' +
               self.id + '\n' + '=' * 61)
-        subtotal = self._bill()
+        subtotal = self.display_order()
         for key, val in self.final_order.items():
             if key in menu_items['appitizers']:
                 price = menu_items['appitizers'].get(key)[0]*val
@@ -54,7 +54,7 @@ class Order:
         with open('receipts/' + self.id + '.txt', 'w') as f:
             f.write(a)
 
-    def remove(self, key):
+    def remove_item(self, key):
         """Remove a food item from the order."""
         key = key.rsplit(' ', 1)
         if len(key) == 1 or type(int(key[1])) is not int:
@@ -64,20 +64,20 @@ class Order:
                 if self.final_order[key] == 0:
                     del self.final_order[key]
                 menu_items[find(key)][key][1] += 1
-            print('Your current total is ${:.2f}\n'.format(self._bill()))
+            print('Your current total is ${:.2f}\n'.format(self.display_order()))
         else:
             if key[0] in self.final_order:
                 self.final_order[key[0]] -= int(key[1])
                 if self.final_order[key[0]] == 0:
                     del self.final_order[key[0]]
                 menu_items[find(key[0])][key[0]][1] += int(key[1])
-            print('Your current total is ${:.2f}\n'.format(self._bill()))
+            print('Your current total is ${:.2f}\n'.format(self.display_order()))
 
-    def display_order(self):
+    def print_receipt(self):
         """Display reciept of current order."""
         print('\n' + '*' * 61 + '\n' + 'The Snakes Cafe' + '\n' + 'Order ' +
               self.id + '\n' + '=' * 61)
-        subtotal = self._bill()
+        subtotal = self.display_order()
         for key, val in self.final_order.items():
             if key in menu_items['appitizers']:
                 price = menu_items['appitizers'].get(key)[0]*val
@@ -127,9 +127,9 @@ class Order:
             self.final_order[name] = quant + self.final_order.get(name, 0)
             print('\n ** {} total order(s) of {} has been added to your meal *'
                   '* \n** Your order cost is {:.2f} **\n'
-                  .format(self.final_order[name], name, self._bill()))
+                  .format(self.final_order[name], name, self.display_order()))
 
-    def _bill(self):
+    def display_order(self):
         """Sum a subtotal of selected menu items prices."""
         subtotal = 0
         for key, val in self.final_order.items():
@@ -315,9 +315,9 @@ def cafe():
         elif user_order in menu_items.keys():
             search(order)
         elif user_order == 'order':
-            new_order.display_order()
+            new_order.print_receipt()
         elif user_order.split(' ')[0] == 'remove':
-            new_order.remove(user_order.split(' ', 1)[1])
+            new_order.remove_item(user_order.split(' ', 1)[1])
         elif user_order[-4:] == '.csv':
             create(user_order)
             menu()
