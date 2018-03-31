@@ -330,6 +330,7 @@ def cafe():
             break
         else:
             print('\n** That item is not on the menu **\n')
+            return False
 
 
 if __name__ == '__main__':
